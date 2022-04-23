@@ -1,8 +1,10 @@
 .idea/
 venv/
 __pycache__/
+
 # personal files
 /alkyline/.Database
 /alkyline/Cogs/music.py
 /alkyline/Cogs/webscrape.py
+# 
 *.json
