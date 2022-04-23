@@ -33,9 +33,6 @@ class Staff(StaffCog, GuildOnly):
                 await ctx.guild.ban(user, reason=reason)
             await ctx.guild.ban(user, reason=reason)
             await ctx.send(f'User {user} has been permanently banned for reason: {reason}')
-    # @commands.command()
-    # async def mute(self, ctx, user:typing.Union[discord.Member, discord.User],reason=None):
-    #
 
 
 def setup(bot):

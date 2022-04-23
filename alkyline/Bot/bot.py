@@ -1,6 +1,8 @@
+import random
+
 import discord as discord
 import os
-from discord.ext import commands
+from discord.ext import commands, tasks
 import logging
 from ..Utilities import DottedDict
 log = logging.getLogger(__name__)
@@ -10,17 +12,19 @@ logging.basicConfig(level=logging.INFO, format="[%(asctime)s %(levelname)s]: %(m
 class Alkyline(commands.Bot):
     def __init__(self, *args, **kwargs):
         self.logger = log
+        self.statuses = (discord.Status.online, discord.Status.dnd, discord.Status.idle)
         try:
             self.config = DottedDict(kwargs["config"])
             self.database = self.config.database
+            self.activities = list(self.config.activity)
         except AttributeError:
-            self.logger.error("There is no config for the bot.")
+            self.logger.error("There is no config argument for the bot.")
         kwargs = {
-            'activity': discord.Game(self.config.activity),
+            'activity': discord.Game(random.choice(self.activities)),
             'allowed_mentions': discord.AllowedMentions(
                 everyone=False,
-                users=True,
-                roles=False
+                roles=False,
+                replied_user=False,
             ),
             'description': self.config.description,
             'command_prefix': self.config.command_prefix,
@@ -28,24 +32,8 @@ class Alkyline(commands.Bot):
             'strip_after_prefix': True,
             'fetch_offline_members': True,
             'owner_ids': set(self.config.owner_ids),
-            'member_cache_flags': discord.MemberCacheFlags(
-                online=True,
-                joined=True,
-                voice=True),
-            'intents': discord.Intents(
-                bans=True,
-                guilds=True,
-                invites=True,
-                members=True,
-                messages=True,
-                presences=True,
-                reactions=True,
-                typing=True,
-                voice_states=True,
-                emojis=True,
-                integrations=False,
-                webhooks=False
-            ),
+            'member_cache_flags': discord.MemberCacheFlags.all(),
+            'intents': discord.Intents.all(),
         }
         super().__init__(*args, **kwargs)
 
@@ -54,7 +42,7 @@ class Alkyline(commands.Bot):
 
     async def on_message(self, message):
         ctx = await self.get_context(message)
-        checking = ["zyxkon", "zyx"]
+        checking = ["zyxkon"]
         if any(kw in message.content.lower() for kw in checking):
             async with message.channel.typing():
                 pass
