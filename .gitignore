@@ -1,6 +1,6 @@
-/alkyline/.idea
-/alkyline/.venv
-/alkyline/.Database
-/alkyline/Cogs/music.py
-/alkyline/Cogs/webscrape.py
-*.json
+#/alkyline/.idea
+#/alkyline/.venv
+#/alkyline/.Database
+#/alkyline/Cogs/music.py
+#/alkyline/Cogs/webscrape.py
+#*.json
