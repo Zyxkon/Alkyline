@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 import typing
 import random
-from Zyxbot.Utilities.utilities import get_date
+from ..Utilities import get_date
 from ..Bot.cogs import GuildOnly
 
 
