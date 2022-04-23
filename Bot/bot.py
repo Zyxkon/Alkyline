@@ -129,7 +129,7 @@ class AdvancedBot(commands.Bot):
                 lambda f: f.endswith(".py") and f not in self.config.disabled_extensions,
                 [f for f in os.listdir(r"./Cogs")]):
             try:
-                self.load_extension(r"Zyxbot.Cogs."+file[:-3])
+                self.load_extension(name=f"Cogs.{file[:-3]}")
             except Exception as err:
                 self.logger.exception(
                     f"An unexpected error occurred while trying to load extension {file}: {err}")

@@ -1,7 +1,0 @@
-/.idea
-/venv
-/Database
-__pycache__/
-*.json
-music.py
-webscrape.py
