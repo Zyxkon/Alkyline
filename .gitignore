@@ -1,7 +1,8 @@
-/alkyline/.idea
-/alkyline/.venv
+.idea/
+venv/
+__pycache__/
+# personal files
 /alkyline/.Database
 /alkyline/Cogs/music.py
 /alkyline/Cogs/webscrape.py
-__pycache__/
 *.json
