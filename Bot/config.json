@@ -1,0 +1,16 @@
+{
+    "command_prefix": "]",
+    "activity": "Team Fortress 2",
+    "database": "./Database/database.json",
+        "description": "imma bot",S
+    "disabled_extensions": [
+        "main.py",
+        "launcher.py",
+        "utilities.py",
+        "__init__.py"
+    ],
+    "owner_ids": [
+        693147884354273311
+    ],
+    "token": "ODgwNjUzNDQ3MjUzMzU2NTY0.YShabw.D9LRAF6iWvV_1S4O9BkyluQ-Y58"
+}
