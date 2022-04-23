@@ -2,7 +2,7 @@
     "command_prefix": "]",
     "activity": "Team Fortress 2",
     "database": "./Database/database.json",
-        "description": "imma bot",S
+    "description": "imma bot",
     "disabled_extensions": [
         "main.py",
         "launcher.py",
