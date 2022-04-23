@@ -1,7 +1,6 @@
-/Zyxbot/.idea
-/alkyline/venv
-/Database
-__pycache__/
+/alkyline/.idea
+/alkyline/.venv
+/alkyline/.Database
+/alkyline/Cogs/music.py
+/alkyline/Cogs/webscrape.py
 *.json
-music.py
-webscrape.py
