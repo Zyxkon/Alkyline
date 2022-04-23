@@ -3,4 +3,4 @@
 #/alkyline/.Database
 #/alkyline/Cogs/music.py
 #/alkyline/Cogs/webscrape.py
-#*.json
+*.json
