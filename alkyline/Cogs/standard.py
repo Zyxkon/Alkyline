@@ -1,11 +1,12 @@
 import datetime
-
 from ..Bot.cogs import BaseCog
 from discord.ext import commands
 from ..Utilities import get_date
 import random
 import discord
 import typing
+
+
 class Standard(BaseCog):
     @commands.command(aliases=["whois", "ui"],
                       description="Displays information about input user(s).")
@@ -48,13 +49,6 @@ class Standard(BaseCog):
     @commands.command()
     async def hey(self, ctx):
         await ctx.send("heya")
-
-    # @commands.command
-    # @commands.has_permissions(administrator=True)
-    # async def setprefix(self, ctx, new_prefix):
-    #     self.bot.command_prefix = [new_prefix, "]"]
-    #     await ctx.send(f"The prefix is now {new_prefix}.")
-    #
 
 
 def setup(bot):

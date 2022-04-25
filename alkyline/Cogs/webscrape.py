@@ -1,14 +1,18 @@
+import typing
+
 import discord
 from discord.ext import commands
 import random
 from ..Utilities import get_json
 from aiohttp import ClientSession
+
+
 class Webscrape(discord.ext.commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @staticmethod
-    async def get_json(url):
+    async def get_json(url) -> typing.Union[list, dict]:
         async with ClientSession() as session:
             async with session.get(url) as resp:
                 return await resp.json()
@@ -18,7 +22,7 @@ class Webscrape(discord.ext.commands.Cog):
         return tags.replace(" ", "+")
 
     @staticmethod
-    async def get_all_posts(tags, limit, page=""):
+    async def get_all_posts(tags, limit, page="") -> typing.Union[list, dict]:
         return await get_json(f"https://danbooru.donmai.us/posts.json?tags={tags}&limit={limit}&page={page}")
 
     @staticmethod
@@ -27,19 +31,14 @@ class Webscrape(discord.ext.commands.Cog):
 
     @staticmethod
     async def random_post(tags) -> dict:
-        highest_post_id = await Webscrape.get_highest_post(tags)
-        random_id = random.randint(0, highest_post_id)
-        page = f"{random.choice(['a', 'b'])}{random_id}"
-        json_url = f"https://danbooru.donmai.us/posts.json?tags={tags}&limit=5&page={page}"
         async with ClientSession() as session:
-            async with session.get(json_url) as resp:
+            async with session.get(f"https://danbooru.donmai.us/posts.json?tags="
+                                   f"{tags}&limit=5&page={random.choice(['a', 'b'])}"
+                                   f"{random.randint(0, await Webscrape.get_highest_post(tags))}") as resp:
                 all_posts = await resp.json()
         lim = len(all_posts)
-        if lim != 1:
-            lim -= 1
-        index = random.randint(0, lim)
-        post = all_posts[index]
-        return post
+        lim -= 1 if lim != 1 else 0
+        return all_posts[random.randint(0, lim)]
 
     @discord.ext.commands.command(aliases=['dbr'])
     async def danbooru(self, ctx, *tags):
@@ -55,11 +54,10 @@ class Webscrape(discord.ext.commands.Cog):
             return
         embed = discord.Embed(
             title=f"https://danbooru.donmai.us/posts/{post.get('id')}",
-            description=f"ID: {post.get('id')}"
-        ).set_image(url=post.get('file_url')).add_field(name="Tags:", value=post.get('tag_string_general')).add_field(
+            description=f"ID: {post.get('id')}").set_image(
+            url=post.get('file_url')).add_field(name="Tags:", value=post.get('tag_string_general')).add_field(
             name="Source:", value=post.get('source')).add_field(
-            name="Rating:", value=ratings[rating]
-        )
+            name="Rating:", value=ratings[rating])
         await ctx.send(embed=embed)
 
 

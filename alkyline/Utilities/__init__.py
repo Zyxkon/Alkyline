@@ -1,6 +1,6 @@
 import datetime
-from discord import Embed
 from aiohttp import ClientSession
+
 
 class DottedDict(dict):
     def __init__(self, dictionary):
@@ -10,11 +10,6 @@ class DottedDict(dict):
 
     def __getattr__(self, item):
         return self[item]
-
-
-class Embedment(Embed):
-    def __init__(self, *args,  **kwargs):
-        super().__init__(**kwargs)
 
 
 async def get_json(_url):
