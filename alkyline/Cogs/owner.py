@@ -13,11 +13,11 @@ class Owner(PrivateCog):
 
     @commands.command(aliases=["rl"])
     async def reload(self, ctx: commands.Context):
-        disabled = self.bot.config["disabled_extensions"]
-        for file in os.listdir(r"./Cogs"):
+        disabled = self.bot.config.disabled_extensions
+        for file in os.listdir(r"alkyline/Cogs"):
             if file.endswith(".py") and file not in disabled:
                 try:
-                    self.bot.reload_extension(r"Zyxbot.Cogs." + file[:-3])
+                    self.bot.reload_extension(r"alkyline.Cogs." + file[:-3])
                 except Exception as err:
                     self.bot.logger.exception(
                         f"An unexpected exception occurred while trying to load extension {file}: {err}")

@@ -3,7 +3,7 @@ import random
 import discord.ext
 import json
 from discord.ext import commands
-from ..Utilities.utilities import get_date
+from ..Utilities import get_date
 from ..Bot.cogs import StaffCog, GuildOnly
 
 

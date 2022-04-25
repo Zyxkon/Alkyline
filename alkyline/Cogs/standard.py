@@ -2,7 +2,7 @@ import datetime
 
 from ..Bot.cogs import BaseCog
 from discord.ext import commands
-from ..Utilities.utilities import get_date
+from ..Utilities import get_date
 import random
 import discord
 import typing

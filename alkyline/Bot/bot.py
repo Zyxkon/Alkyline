@@ -2,7 +2,7 @@ import random
 
 import discord as discord
 import os
-from discord.ext import commands, tasks
+from discord.ext import commands
 import logging
 from ..Utilities import DottedDict
 log = logging.getLogger(__name__)
@@ -52,15 +52,6 @@ class Alkyline(commands.Bot):
 
     async def process_commands(self, cmd):
         txtc, sender, sv = cmd.channel, cmd.author, cmd.guild
-        if type(cmd.channel) == discord.DMChannel:
-            txtc_name = f"{txtc.recipient.name}#{txtc.recipient.discriminator}({txtc.recipient.id})"
-            guild_name = "DMChannel"
-        else:
-            txtc_name, guild_name = txtc.name, f"{sv.name}({sv.id})"
-        dictionary = {
-            f"{sender.name}#{sender.discriminator}({sender.id})": f"{cmd.content}",
-            f"{guild_name}": f"{txtc_name}"
-        }
         message_dict = dict(
             id=cmd.id,
             type=cmd.type,
@@ -71,23 +62,28 @@ class Alkyline(commands.Bot):
                 discriminator=sender.discriminator,
             ),
         )
-        try:
+        if type(cmd.channel) == discord.DMChannel:
+            txtc_name = f"{txtc.recipient.name}#{txtc.recipient.discriminator}({txtc.recipient.id})"
+            guild_name = "DMChannel"
             message_dict["channel"] = dict(
                 id=txtc.id,
                 recipient=txtc.recipient.name,
                 recipient_id=txtc.recipient.id,
             )
-        except Exception:
-            try:
-                message_dict["guild"], message_dict["channel"] = dict(
-                    id=sv.id,
-                    name=sv.name,
-                ), dict(
-                    id=txtc.id,
-                    name=txtc.name
-                )
-            except Exception:
-                pass
+        else:
+            txtc_name, guild_name = txtc.name, f"{sv.name}({sv.id})"
+            message_dict["guild"] = dict(
+                id=sv.id,
+                name=sv.name,
+            )
+            message_dict["channel"] = dict(
+                id=txtc.id,
+                name=txtc.name
+            )
+        dictionary = {
+            f"{sender.name}#{sender.discriminator}({sender.id})": f"{cmd.content}",
+            f"{guild_name}": f"{txtc_name}"
+        }
         dictionary.update(message_dict)
         async with txtc.typing():
             await super().process_commands(cmd)
